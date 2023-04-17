@@ -1,0 +1,1 @@
+<template>Result Page</template>
