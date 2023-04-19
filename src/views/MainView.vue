@@ -1,7 +1,7 @@
 <script setup>
 import q from '../data/quizes.json'
 import { ref, watch } from 'vue'
-import Card from '../components/Card.vue'
+import { Card } from '../components'
 import { RouterLink } from 'vue-router';
 
 
@@ -10,6 +10,9 @@ const search = ref('')
 watch(search, () => {
     subjects.value = q.filter((subject) => subject.name.toLowerCase().includes(search.value.toLowerCase()))
 })
+function addTosessionStorage(subjectSelected){
+    sessionStorage.subject = subjectSelected
+}
 </script>
 
 <template>
@@ -19,7 +22,8 @@ watch(search, () => {
             <input type="text" placeholder="Search..." v-model="search">
         </header>
         <div class="options-container">
-            <RouterLink :to="'/quiz/'+ subject.id" v-for="(subject, index) in subjects" :key="subject.id" style="text-decoration: inherit; color: inherit; cursor: auto;">
+            <RouterLink class="reset-link-style" :to="'/quiz/' + subject.id" v-for="subject in subjects" @click="addTosessionStorage(subject.id)"
+                :key="subject.id">
                 <Card :subject="subject" />
             </RouterLink>
         </div>
@@ -30,6 +34,12 @@ watch(search, () => {
 .container {
     max-width: 1000px;
     margin: 0 auto
+}
+
+.reset-link-style {
+    text-decoration: inherit;
+    color: inherit;
+    cursor: auto;
 }
 
 header {
@@ -55,5 +65,4 @@ header input {
     display: flex;
     flex-wrap: wrap;
     margin-top: 40px;
-}
-</style>
+}</style>

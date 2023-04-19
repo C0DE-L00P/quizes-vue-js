@@ -1,9 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-// import { QuizView, } from '../views/index'
-import MainView from '../views/MainView.vue'
-import QuizView from '../views/QuizView.vue'
-import ResultView from '../views/ResultView.vue'
-import View404 from '../views/View404.vue'
+import { MainView, QuizView, ResultView, View404 } from '../views'
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),

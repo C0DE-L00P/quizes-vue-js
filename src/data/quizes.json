@@ -12,13 +12,13 @@
             "id": 1,
             "label": "A",
             "text": "16",
-            "isCorrect": true
+            "isCorrect": false
           },
           {
             "id": 2,
             "label": "B",
             "text": "1",
-            "isCorrect": false
+            "isCorrect": true
           },
           {
             "id": 3,
@@ -70,13 +70,11 @@
         "options": [
           {
             "id": 1,
-            "label": "A",
             "text": "3",
             "isCorrect": true
           },
           {
             "id": 2,
-            "label": "B",
             "text": "1",
             "isCorrect": false
           },
