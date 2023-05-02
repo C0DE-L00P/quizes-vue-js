@@ -3,15 +3,28 @@ import q from '../data/quizes.json'
 import { ref, watch } from 'vue'
 import { Card } from '../components'
 import { RouterLink } from 'vue-router';
-
+import gsap from 'gsap';
 
 const subjects = ref(q)
 const search = ref('')
 watch(search, () => {
     subjects.value = q.filter((subject) => subject.name.toLowerCase().includes(search.value.toLowerCase()))
 })
-function addTosessionStorage(subjectSelected){
+function addToSessionStorage(subjectSelected) {
     sessionStorage.subject = subjectSelected
+}
+
+const beforeEnterAnimation = (el) => {
+    el.style.opacity = 0;
+    el.style.transform = "translateY(-100px)"
+}
+const enterAnimation = (el) => {
+    gsap.to(el, {
+        opacity: 1,
+        y: 0,
+        duration: 0.4,
+        delay: el.dataset.index * 0.1
+    })
 }
 </script>
 
@@ -22,10 +35,13 @@ function addTosessionStorage(subjectSelected){
             <input type="text" placeholder="Search..." v-model="search">
         </header>
         <div class="options-container">
-            <RouterLink class="reset-link-style" :to="'/quiz/' + subject.id" v-for="subject in subjects" @click="addTosessionStorage(subject.id)"
-                :key="subject.id">
-                <Card :subject="subject" />
-            </RouterLink>
+            <TransitionGroup appear @before-enter="beforeEnterAnimation" @enter="enterAnimation" @before-leave="afterLeaveAnimation">
+                <RouterLink class="reset-link-style" :to="'/quiz/' + subject.id" v-for="(subject, index) in subjects"
+                    @click="addToSessionStorage(subject.id)" :key="subject.id" :data-index="index">
+
+                    <Card :subject="subject" />
+                </RouterLink>
+            </TransitionGroup>
         </div>
     </div>
 </template>
@@ -65,4 +81,5 @@ header input {
     display: flex;
     flex-wrap: wrap;
     margin-top: 40px;
-}</style>
+}
+</style>
